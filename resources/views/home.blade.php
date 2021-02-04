@@ -12,16 +12,16 @@
                     <div class="card mb-5" style="">
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Autore: {{ $post->author}}</h6><hr class="my-1">
-                            <h6 class="card-subtitle mb-2 text-muted">Autore: {{ $post->author}}</h6><hr class="my-1">
-                            <h6 class="card-subtitle mb-2 text-muted">Descrizione: <br> {{ $post->postInf->description}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Autore: {{ $post->author}}</h6>
+                            
+                            <a href="{{route('posts.show', $post->id)}}" class="btn btn-info">Reserved Details</a>
+                            <a href="{{route('posts.edit', $post->id)}}" class="btn btn-warning">Edit</a>
+
                         </div>
                     </div>
                 </div>
                 @endforeach
                 
-  
-
             
         </div>
     </div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\PostsModel;
 use App\PostInfModel;
 use App\CategoryModel;
+use App\TagModel;
+
 
 class PostsController extends Controller
 {
@@ -17,7 +19,7 @@ class PostsController extends Controller
     public function index()
     {
         $data = PostsModel::all();
-       return view('home', compact('data'));
+        return view("home", compact("data"));
     }
 
     /**
@@ -27,7 +29,10 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        
+        $categories = CategoryModel::all();
+        $tags = TagModel::all();
+        return view("create_data", compact('categories', 'tags'));
     }
 
     /**
@@ -38,7 +43,27 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $createPost = new PostsModel();
+        $createPost->title = $request->input('inputPostTitle');
+        $createPost->author = $request->input("inputPostAuthor");
+        $createPost->category_id = $request->input("inputPostCategory");
+        $createPost->save();
+
+        
+        $createPostInf = new PostInfModel();
+        $createPostInf->post_id = $createPost->id;
+        $createPostInf->description = $request->input("inputPostDesc");
+        $createPostInf->slug = "prova-slug";
+        $createPostInf->save();
+
+        
+        $tags = $request->input("inputPostTag");
+        foreach ($tags as $tag) {
+            $createPost->postTag()->attach($tag);
+        }
+
+        $data = PostsModel::find($createPost->id);
+        return view('detail_post', compact('data'));
     }
 
     /**
@@ -49,7 +74,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = PostsModel::find($id);
+        return view('detail_post', compact('data'));
     }
 
     /**
@@ -60,7 +86,10 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = PostsModel::find($id);
+        $categories = CategoryModel::all();
+        $tags = TagModel::all();
+        return view('edit_data', compact('data', 'categories', 'tags'));
     }
 
     /**
@@ -72,7 +101,26 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updatePost = PostsModel::find($id);
+        $updatePost->title = $request['inputPostTitle'];
+        $updatePost->author = $request["inputPostAuthor"];
+        $updatePost->category_id = $request["inputPostCategory"];
+        $updatePost->save();
+
+        
+        $updatePostInf = PostInfModel::where('post_id', $updatePost->id);
+        $updatePostInf->description = $request["inputPostDesc"];
+        $updatePostInf->slug = "prova-slug";
+        $updatePostInf->save();
+
+        
+        $tags = $request["inputPostTag"];
+        foreach ($tags as $tag) {
+            $updatePost->postTag()->attach($tag);
+        }
+
+        $data = PostsModel::find($updatePost->id);
+        return view('detail_post', compact('data'));
     }
 
     /**

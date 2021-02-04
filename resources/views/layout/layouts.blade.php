@@ -25,12 +25,15 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Laravel Base Crud</h3>
+                <h3>Laravel Boolean Base</h3>
             </div>
             
             <ul class="list-unstyled components">
                 <li class="{{ Request::segment(2) == '' ? 'active' : '' }}">
                     <a href="/">Home</a>
+                </li>
+                <li class="{{ Request::segment(2) == 'create' ? 'active' : '' }}">
+                    <a href="{{ route('posts.create') }}">create</a>
                 </li>
                 
             </ul>
