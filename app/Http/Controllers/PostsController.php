@@ -101,23 +101,22 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $updatePost = PostsModel::find($id);
+        $updatePost->postTag()->detach();
         $updatePost->title = $request['inputPostTitle'];
         $updatePost->author = $request["inputPostAuthor"];
         $updatePost->category_id = $request["inputPostCategory"];
         $updatePost->save();
 
         
-        $updatePostInf = PostInfModel::where('post_id', $updatePost->id);
+        $updatePostInf = PostInfModel::where('post_id', $updatePost->id)->first();
         $updatePostInf->description = $request["inputPostDesc"];
         $updatePostInf->slug = "prova-slug";
         $updatePostInf->save();
 
         
-        $tags = $request["inputPostTag"];
-        foreach ($tags as $tag) {
-            $updatePost->postTag()->attach($tag);
-        }
+        $updatePost->postTag()->attach($request->input("inputPostTag"));
 
         $data = PostsModel::find($updatePost->id);
         return view('detail_post', compact('data'));

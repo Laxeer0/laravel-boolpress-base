@@ -12,13 +12,13 @@
             <div class="form-group row">
                 <label for="inputPostTitle" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-10">
-                    <input type="name" class="form-control" id="inputPostTitle" name="inputPostTitle" placeholder="Full Name">
+                    <input type="name" class="form-control" id="inputPostTitle" name="inputPostTitle" placeholder="Enter Title...">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputPostAuthor" class="col-sm-2 col-form-label">Author</label>
                 <div class="col-sm-10">
-                    <input type="name" class="form-control" id="inputPostAuthor" name="inputPostAuthor" placeholder="Credit Card">
+                    <input type="name" class="form-control" id="inputPostAuthor" name="inputPostAuthor" placeholder="Enter Desc...">
                 </div>
             </div>
             <div class="form-group row">
@@ -34,7 +34,7 @@
             <div class="form-group row">
                 <label for="inputPostDesc" class="col-sm-2 col-form-label">Description</label>
                 <div class="col-sm-10">
-                    <input type="name" class="form-control" id="inputPostDesc" name="inputPostDesc" placeholder="Credit Card">
+                    <input type="name" class="form-control" id="inputPostDesc" name="inputPostDesc" placeholder="Enter Description...">
                 </div>
             </div>
            
