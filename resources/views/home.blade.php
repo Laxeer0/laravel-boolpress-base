@@ -16,6 +16,11 @@
                             
                             <a href="{{route('posts.show', $post->id)}}" class="btn btn-info">Reserved Details</a>
                             <a href="{{route('posts.edit', $post->id)}}" class="btn btn-warning">Edit</a>
+                            <form method="post" action="{{route('posts.destroy', $post->id)}}">
+                                @csrf
+                                @method('delete')
+                                <input type="submit" class="btn btn-danger" value="Remove">
+                            </form>
 
                         </div>
                     </div>

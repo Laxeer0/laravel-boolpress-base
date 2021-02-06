@@ -58,9 +58,7 @@ class PostsController extends Controller
 
         
         $tags = $request->input("inputPostTag");
-        foreach ($tags as $tag) {
-            $createPost->postTag()->attach($tag);
-        }
+        $createPost->postTag()->attach($tags);
 
         $data = PostsModel::find($createPost->id);
         return view('detail_post', compact('data'));
@@ -103,7 +101,6 @@ class PostsController extends Controller
     {
         
         $updatePost = PostsModel::find($id);
-        $updatePost->postTag()->detach();
         $updatePost->title = $request['inputPostTitle'];
         $updatePost->author = $request["inputPostAuthor"];
         $updatePost->category_id = $request["inputPostCategory"];
@@ -116,7 +113,7 @@ class PostsController extends Controller
         $updatePostInf->save();
 
         
-        $updatePost->postTag()->attach($request->input("inputPostTag"));
+        $updatePost->postTag()->sync($request->input("inputPostTag"));
 
         $data = PostsModel::find($updatePost->id);
         return view('detail_post', compact('data'));
@@ -130,6 +127,18 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delPost = PostsModel::find($id);
+
+        $delPost->postInf()->delete();
+
+        $tags = $delPost->postTag;
+        foreach($tags as $tag){
+            $delPost->postTag()->detach($tag->id);
+        }
+
+        $delPost->delete();
+
+        return redirect()->back();
+
     }
 }
