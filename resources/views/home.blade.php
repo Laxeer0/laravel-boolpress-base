@@ -5,30 +5,36 @@
 
 @section("main")
 
-<div class="container">
-        <div class="row">
+            <table class="table">
+              <thead class="thead-custom text-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+              </thead>
+            <tbody>
                 @foreach ($data as $post )
-                <div class="col-4">
-                    <div class="card mb-5" style="">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Autore: {{ $post->author}}</h6>
-                            
+                    <tr>
+                    <th scope="row">{{ $post->id }}</th>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->author }}</td>
+                    <td class="d-flex justify-content-end">
                             <a href="{{route('posts.show', $post->id)}}" class="btn btn-info">Reserved Details</a>
-                            <a href="{{route('posts.edit', $post->id)}}" class="btn btn-warning">Edit</a>
-                            <form method="post" action="{{route('posts.destroy', $post->id)}}">
+                            <a href="{{route('posts.edit', $post->id)}}" class="btn btn-warning mx-5">Edit</a>
+                            <form method="post" class="d-inline"action="{{route('posts.destroy', $post->id)}}">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" class="btn btn-danger" value="Remove">
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
+                            </form></td>
+                    </tr>
+               
                 @endforeach
-                
-            
-        </div>
-    </div>
+                                
+                </tbody>
+                </table>
+                            
 
 @endsection
